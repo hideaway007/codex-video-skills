@@ -1,0 +1,30 @@
+{
+  "id": "d2-editorial-grid",
+  "name": "D2 Editorial Grid",
+  "nameZh": "纸面档案编辑风",
+  "description": "Warm off-white archive paper with a faint grid, serif Chinese headlines, rust accent, and monospaced metadata. Best for knowledge management, agent workflows, and documentary explainers.",
+  "descriptionZh": "暖白网格纸面、宋体大标题、锈红强调、等宽 metadata，适合知识管理、AI coding、Agent 工作流、文档系统和概念解释类视频。",
+  "mood": [
+    "light",
+    "editorial",
+    "archive",
+    "grid",
+    "serif",
+    "documentary",
+    "calm"
+  ],
+  "bestFor": [
+    "知识管理",
+    "AI coding 教程",
+    "Agent 工作流",
+    "文档系统",
+    "概念解释",
+    "项目复盘"
+  ],
+  "preview": {
+    "shell": "#e8e1d6",
+    "surface": "#f7f2e8",
+    "text": "#2b211b",
+    "accent": "#bd6a55"
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "HyperFrames Teaching Video"
+  short_description: "用 HyperFrames 生成中文教学视频、字幕、封面和发布草稿"
+  default_prompt: "Use $hyperframes-teaching-video to create or revise a Chinese teaching video with synced narration, large single-line subtitles, cover art, verified HyperFrames render output, and social publishing draft assets when requested."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Web Video Presentation"
+  short_description: "把口播稿或漫画 panels 做成可录屏网页视频并合成音频"
+  default_prompt: "Use $web-video-presentation to turn a script, article, or comic panels into a click-driven 16:9 web video presentation with narration."
