@@ -1,13 +1,15 @@
 ---
 name: hyperframes-teaching-video
-description: Create, revise, render, package, and prepare publishing for Chinese teaching or explainer videos with HyperFrames HTML, synced narration, large subtitles, Apple-style visual direction, thumbnail or cover generation, real MP4 verification, and social platform draft assets. Use when the user asks to make AI coding or technical course videos from source material, improve pacing, voiceover, animation focus, captions, transitions, duration, cover, platform title/tags/copy, or upload preparation, fix blank or dropped transition frames, or says to use HyperFrames instead of Web Video Engineer or web-video-presentation.
+description: Create, revise, render, package, and prepare publishing for Chinese HyperFrames videos of many kinds, including teaching videos, explainers, product demos, workflow breakdowns, case studies, showcase videos, social posts, and general narrated visual videos. Use for HyperFrames HTML video composition, synced narration, Doubao/Volcano or Edge TTS voice generation, large single-line subtitles, Apple-style or user-specified visual direction, thumbnail or cover generation, real MP4 verification, social platform draft assets, pacing fixes, animation enrichment, transition repair, or when the user says to use HyperFrames instead of Web Video Engineer or web-video-presentation.
 ---
 
-# HyperFrames Teaching Video
+# HyperFrames Video
 
 ## Contract
 
-Use HyperFrames as the primary production surface for Chinese teaching videos. Treat the HyperFrames HTML composition, synthesized narration, rendered MP4, and optional cover image as the deliverables.
+Use HyperFrames as the primary production surface for Chinese narrated videos, not only teaching videos. Treat the HyperFrames HTML composition, synthesized narration, rendered MP4, and optional cover image as the deliverables.
+
+The folder name and skill name are legacy-compatible, but the skill scope is general video production: tutorials, explainers, product or capability showcases, workflow/case-study breakdowns, short social videos, and other topic-driven narrated videos.
 
 Do not use the old Web Video Engineer / `web-video-presentation` implementation path unless the user explicitly asks for a click-driven webpage presentation. Reuse only its durable production lessons: narration-first structure, large readable subtitles, 16:9 frame checks, and explicit render verification.
 
@@ -16,7 +18,7 @@ Do not use the old Web Video Engineer / `web-video-presentation` implementation 
 Use Apple Keynote / macOS style unless the user gives a stronger reference:
 
 - Calm high-end layout, generous but purposeful spacing, clear hierarchy, glass or soft material panels, subtle shadows, rounded corners, clean icons, and smooth easing.
-- Keep the tone like a science or teaching video: conversational, concrete, and easy to follow. Avoid stiff report language and over-dense bullet narration.
+- Keep the tone conversational, concrete, and easy to follow. For teaching videos, sound like a clear teacher; for product/showcase/workflow videos, sound like a sharp presenter or production breakdown, not a formal report.
 - Use Chinese for audience-facing labels whenever English is not necessary. Keep English only for code identifiers, API names, UI names, or terms the viewer must recognize.
 - Do not say internal course labels like `s03`, `s02`, folder names, or implementation IDs in the voiceover or on-screen text unless the user explicitly wants them.
 - Avoid starting with formulaic lines like "AI 时代，别再...". Prefer a direct claim, a concrete pain point, or a familiar analogy.
@@ -30,10 +32,12 @@ Use Apple Keynote / macOS style unless the user gives a stronger reference:
 2. Write the narration before animating.
    - For narration drafting or rewriting, read `references/CODE-GARDEN-VOICEOVER.md` first. This is the imported voiceover-writing reference from the old `web-video-presentation` skill.
    - Treat that reference as the voice and pacing guide, then apply this skill's higher-priority video requirements: Apple-style presentation, casual teaching tone, no audience-facing internal labels like `s03`, Chinese-first labels, large subtitles, and narration-synced visual entrances.
-   - Make the script sound like a teaching video, not a formal document.
+   - Before writing the script, write a one-sentence **positioning statement** in `DESIGN.md`: is this video a tutorial, explainer, case-study breakdown, product/capability showcase, workflow teardown, story-driven topic video, pitfall review, or publishing asset. Do not let a workflow/case-study/showcase request drift into a generic "how to use this tool" tutorial.
+   - If the user asks to explain "our workflow", "this plugin's power", "how this video was produced", "TTS/subtitles/render pipeline", or "avoid踩坑", frame the narration as a production-system teardown: show what actually happened, why each stage exists, where failures occur, and what gates prevent them. Use "video factory / director desk / dubbing booth / sync bus / HTML stage / QA radar / render gate" style metaphors instead of step-by-step beginner teaching.
+   - Make the script sound like a video for real viewers, not a formal document. Do not force every topic into a classroom lesson.
    - Expand duration by adding useful explanation, examples, analogies, and short recap beats, not by stretching dead air.
    - Split narration into short cues that can drive subtitles and visual entrances.
-   - Keep one source of truth for the final narration, such as `assets/narration.txt` or a clearly named script file.
+   - Keep one sync manifest as the source of truth for narration, subtitles, and scene starts. Prefer `assets/sync-script.json` entries shaped like `{ "scene": "#scene-3", "text": "..." }`; generate `assets/narration.txt`, `assets/sync-map.js`, and HTML duration from it.
    - End cleanly on a concrete takeaway or next action. Do not use generic future-facing endings like "以后你看到..." / "不要只看..." / "这才是...真正值钱的地方."
 
 3. Build a timed storyboard.
@@ -45,14 +49,23 @@ Use Apple Keynote / macOS style unless the user gives a stronger reference:
 4. Implement in HyperFrames.
    - Put the composition duration on the root element with `data-duration`.
    - Keep the audio in a real `<audio>` element and sync animation to the actual audio duration after synthesis.
+   - Do not hand-maintain separate `captions`, `scenePlan`, and narration text arrays. Derive captions and scene starts from the generated sync map.
    - Register a paused GSAP timeline in `window.__timelines` and build deterministic animation. Do not rely on random values, current date, or infinite loops.
-   - Animate `transform`, `opacity`, filters, masks, and strokes. Prefer overlapping crossfades, slides, blur reveals, and clip reveals for transitions.
-   - Avoid full-screen wipes or hard `visibility` changes that can expose a blank frame during rendering.
+   - Animate `transform`, `opacity`, filters, masks, and strokes. Default scene transitions to soft overlapped crossfades with tiny scale changes.
+   - Avoid full-screen wipes, white flashes, sweeping light bars, hard `visibility` changes, or blank-prone transitions unless the user explicitly asks for a high-energy effect.
+   - High-energy showcase videos may use richer motion such as camera pushes, parallax layers, kinetic typography, SVG path drawing, waveform motion, scanning highlights, particle fields, dashboard meters, and rotating logic maps, but every effect must be tied to the current narration beat. Rich motion is not a substitute for synced storytelling.
    - Keep text inside containers at 1920x1080 and mobile preview sizes; no clipped labels, tiny metadata, or decorative text that becomes unreadable.
 
 5. Generate or update narration audio.
-   - Use the project's TTS path when available. For this skill family, default to Doubao / Volcano `seed-tts-2.0`, voice `zh_male_liufei_uranus_bigtts`, and `speech_rate=20` unless the user says otherwise.
-   - Do not silently fall back to a slower default like `speech_rate=0` or `speed=1.0`.
+   - Use the project's TTS path when available. Supported providers include Doubao / Volcano and Edge TTS. If a project already has a working segmented TTS script, extend or reuse it instead of inventing a separate timing path.
+   - In `/Users/d2/project/web vidio` projects, default to Doubao / Volcano `seed-tts-2.0`, voice `zh_male_liufei_uranus_bigtts`, and `speech_rate=20` unless the user says otherwise.
+   - Edge TTS is supported when the user asks for it, when the project has an Edge TTS script, or when Doubao / Volcano credentials are unavailable and Edge TTS is acceptable. Edge TTS does not require the Doubao API key, but it still needs network access and the `edge-tts` CLI or Python package installed.
+   - Before using Edge TTS, verify availability with `command -v edge-tts` or `python3 -c "import edge_tts"`. If missing, install it through the project's dependency manager when that is acceptable, or report the missing dependency as a blocker instead of silently switching provider.
+   - Recommended Edge TTS defaults for Chinese: voice `zh-CN-YunxiNeural` for a male presenter voice, or `zh-CN-XiaoxiaoNeural` for a female presenter voice; rate `+20%` unless the user requests a slower or faster delivery. Record the chosen provider, voice, and rate in `DESIGN.md` or the runbook.
+   - For Edge TTS, keep the same segmented sync mechanism: split `assets/sync-script.json` into one text file per cue, synthesize one audio file per cue, concatenate in cue order, run `ffprobe` on every segment or final audio, and regenerate `assets/sync-map.js` from real audio durations.
+   - Do not estimate timing from character count, Edge TTS word-boundary metadata, or narration text alone when audio files exist. The rendered subtitles and scene starts must come from measured audio durations.
+   - Do not silently fall back to a slower default like Doubao `speech_rate=0`, generic `speed=1.0`, or Edge TTS `rate=+0%` if the project convention expects a faster social-video pace.
+   - If switching TTS providers for an existing video, regenerate narration audio, sync map, subtitles, scene timing, and the MP4. Never keep an old sync map with new audio.
    - Run `ffprobe` after synthesis and update the HyperFrames duration and cue timings from the real audio duration.
 
 6. Add large subtitles.
@@ -62,8 +75,9 @@ Use Apple Keynote / macOS style unless the user gives a stronger reference:
    - Use roughly 66-72px Chinese text for burned-in HyperFrames subtitles, strong contrast or shadow, and enough bottom margin to avoid covering the scene focus.
    - Use simple opacity fades for subtitle entrances and exits. Avoid jumpy y-motion, bouncing, or overly frequent pop-ins.
    - Break subtitles into cue-sized chunks synced to speech. Avoid one tiny static caption per scene and avoid long paragraph captions.
+   - Enforce single-line captions in the sync source. If a cue would wrap, split it into adjacent shorter cues and regenerate TTS/timing; do not accept two rendered lines as a fix.
 
-7. Add visual assets when they help teaching.
+7. Add visual assets when they help the video.
    - Use screenshots, simple icons, diagrams, code snippets, UI fragments, or web images when they clarify the point.
    - If current, external, or product-specific imagery matters, search or browse for current references and save local assets instead of hotlinking.
    - For generated or edited covers, follow the user's reference image. If the user says the person must stay unchanged, only change typography, background, diagrams, lighting accents, or non-person elements.

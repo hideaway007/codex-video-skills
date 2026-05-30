@@ -1,4 +1,0 @@
-interface:
-  display_name: "If You Become X Voiceover"
-  short_description: "写中文“假如你成为X”第二人称口播稿、评分和反贴脸检查"
-  default_prompt: "Use $if-you-become-x-voiceover to create a Chinese second-person “假如你成为 X” voiceover script with anti-clone checks."

@@ -1,6 +1,6 @@
 # Codex Video Skills
 
-一组面向中文 AI 教学视频、网页视频演示、AI 行业脚本和口播稿生产的 Codex skills。
+一组面向中文 HyperFrames 视频和网页视频演示生产的 Codex skills。
 
 这个仓库是从本地生产环境整理出的 clean snapshot：只包含可复用的 skill、参考文档、脚手架模板和安装/校验脚本，不包含视频成片、账号草稿、浏览器缓存、本地日志或私有运行记录。
 
@@ -8,12 +8,8 @@
 
 | Skill | 用途 |
 |---|---|
-| `hyperframes-teaching-video` | 用 HyperFrames 制作中文教学/科普视频，包含口播、字幕、动画、封面和发布草稿准备 |
+| `hyperframes-teaching-video` | 用 HyperFrames 制作中文通用视频，支持 Doubao / Edge TTS、字幕、动画、封面和发布草稿准备 |
 | `web-video-presentation` | 把文章、口播稿或漫画 panels 做成可录屏的 16:9 网页视频演示 |
-| `ai-industry-video-script` | 生成 AI 行业短视频/长视频/图文脚本，覆盖术语解释、模型发布、产品评测、公司产业链和月度复盘 |
-| `if-you-become-x-voiceover` | 生成中文“假如你成为 X”第二人称口播稿，并做结构与反贴脸检查 |
-
-`archive/ai-prompt-source` 是早期 prompt 包的归档来源，不是可直接加载的 Codex skill。正式入口已经整理为 `skills/ai-industry-video-script`。
 
 ## Install
 
@@ -51,10 +47,7 @@ cp -R skills/hyperframes-teaching-video "$HOME/.codex/skills/"
 skills/
   hyperframes-teaching-video/
   web-video-presentation/
-  ai-industry-video-script/
-  if-you-become-x-voiceover/
 archive/
-  ai-prompt-source/
 docs/
   skill-inventory.md
 scripts/

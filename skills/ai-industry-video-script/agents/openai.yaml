@@ -1,4 +1,0 @@
-interface:
-  display_name: "AI Industry Video Script"
-  short_description: "生成 AI 行业视频脚本、选题、产品评测和模型发布拆解"
-  default_prompt: "Use $ai-industry-video-script to draft a Chinese AI industry explainer script with clear facts, judgments, visuals, and publishable structure."
